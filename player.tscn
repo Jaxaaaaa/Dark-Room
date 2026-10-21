@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://birx1vw1dxg6a"]
+
+[ext_resource type="Script" uid="uid://dsxd2j64syh7i" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tnwwl"]
+radius = 15.033297
+
+[node name="Player" type="CharacterBody2D" unique_id=1967906088]
+script = ExtResource("1_4flbx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1195914107]
+shape = SubResource("CircleShape2D_tnwwl")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1878663991]
+polygon = PackedVector2Array(16, 0, -10, -10, -10, 10)
