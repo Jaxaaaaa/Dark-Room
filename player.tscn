@@ -5,6 +5,19 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnwwl"]
 radius = 15.033297
 
+[sub_resource type="Gradient" id="Gradient_4flbx"]
+offsets = PackedFloat32Array(0.06490385, 0.68990386)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tnwwl"]
+gradient = SubResource("Gradient_4flbx")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4flbx"]
+load_path = "res://.godot/imported/flashlight_cone.png-0206cae8ab514cb762f2ed4053c9d71c.ctex"
+
 [node name="Player" type="CharacterBody2D" unique_id=1967906088]
 script = ExtResource("1_4flbx")
 
@@ -13,3 +26,14 @@ shape = SubResource("CircleShape2D_tnwwl")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1878663991]
 polygon = PackedVector2Array(16, 0, -10, -10, -10, 10)
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1745110368]
+color = Color(1, 0.84313726, 0.5058824, 1)
+energy = 1.99
+texture = SubResource("GradientTexture2D_tnwwl")
+texture_scale = 3.0
+
+[node name="FlashLight" type="PointLight2D" parent="." unique_id=1271864933]
+energy = 3.0
+texture = SubResource("CompressedTexture2D_4flbx")
+offset = Vector2(128, 0)
