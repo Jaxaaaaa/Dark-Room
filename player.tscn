@@ -18,7 +18,7 @@ fill_to = Vector2(1, 0.5)
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4flbx"]
 load_path = "res://.godot/imported/flashlight_cone.png-0206cae8ab514cb762f2ed4053c9d71c.ctex"
 
-[node name="Player" type="CharacterBody2D" unique_id=1967906088]
+[node name="Player" type="CharacterBody2D" unique_id=1967906088 groups=["Player_group"]]
 script = ExtResource("1_4flbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1195914107]
@@ -36,7 +36,15 @@ texture_scale = 1.5
 
 [node name="FlashLight" type="PointLight2D" parent="." unique_id=1271864933]
 color = Color(1, 0.84313726, 0.5058824, 1)
-energy = 3.0
+energy = 8.68
 shadow_enabled = true
 texture = SubResource("CompressedTexture2D_4flbx")
 offset = Vector2(128, 0)
+
+[node name="FlashLight_Area2D" type="Area2D" parent="FlashLight" unique_id=106244019]
+
+[node name="FlashLight_CollisionPolygon2D" type="CollisionPolygon2D" parent="FlashLight/FlashLight_Area2D" unique_id=697712063]
+polygon = PackedVector2Array(8, 0, 192, -96, 192, 120)
+
+[connection signal="body_entered" from="FlashLight/FlashLight_Area2D" to="." method="_on_flash_light_area_2d_body_entered"]
+[connection signal="body_exited" from="FlashLight/FlashLight_Area2D" to="." method="_on_flash_light_area_2d_body_exited"]

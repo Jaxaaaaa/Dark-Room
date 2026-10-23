@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b4g2hxylhc6xl"]
+
+[ext_resource type="Script" uid="uid://pfh4a1btwo72" path="res://creature.gd" id="1_fd6ru"]
+
+[node name="Creature" type="CharacterBody2D" unique_id=2024316162]
+script = ExtResource("1_fd6ru")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=646433165]
+polygon = PackedVector2Array(0, -16, 16, 0, 0, 16)
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=2075472954 groups=["Creatures"]]
+light_mask = 0
+scale = Vector2(2, 2)
+color = Color(0.0627451, 0.07058824, 0.12156863, 0.12156863)
+polygon = PackedVector2Array(0, -8, 8, 0, 0, 8)
