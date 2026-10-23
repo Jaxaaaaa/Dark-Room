@@ -30,10 +30,13 @@ polygon = PackedVector2Array(16, 0, -10, -10, -10, 10)
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1745110368]
 color = Color(1, 0.84313726, 0.5058824, 1)
 energy = 1.99
+shadow_enabled = true
 texture = SubResource("GradientTexture2D_tnwwl")
-texture_scale = 3.0
+texture_scale = 1.5
 
 [node name="FlashLight" type="PointLight2D" parent="." unique_id=1271864933]
+color = Color(1, 0.84313726, 0.5058824, 1)
 energy = 3.0
+shadow_enabled = true
 texture = SubResource("CompressedTexture2D_4flbx")
 offset = Vector2(128, 0)
