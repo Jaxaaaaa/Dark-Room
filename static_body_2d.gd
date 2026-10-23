@@ -1,16 +1,12 @@
 extends StaticBody2D
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var full_occluder: LightOccluder2D = $FullOccluder
-@onready var foot_occluder: LightOccluder2D = $FootOccluder
 var tween 
 
 func _ready() -> void:
 	set_behind(false)
 
 func set_behind(is_behind: bool) -> void:
-	full_occluder.visible = not is_behind
-	foot_occluder.visible = is_behind
 	var target_alpha = 0.1 if is_behind else 1.0
 	if tween: #si un tween existe on le kill pour éviter les problèmes lors d'entrées et sorties rapides
 		tween.kill()

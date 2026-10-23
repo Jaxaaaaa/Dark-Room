@@ -36,6 +36,14 @@ texture = SubResource("GradientTexture2D_tnwwl")
 texture_scale = 1.5
 height = 40.0
 
+[node name="PointLight2DWall" type="PointLight2D" parent="." unique_id=1777689464]
+color = Color(1, 0.84313726, 0.5058824, 1)
+energy = 1.99
+range_item_cull_mask = 2
+texture = SubResource("GradientTexture2D_tnwwl")
+texture_scale = 1.5
+height = 40.0
+
 [node name="FlashLight" type="PointLight2D" parent="." unique_id=1271864933]
 color = Color(1, 0.84313726, 0.5058824, 1)
 energy = 8.68
@@ -48,6 +56,14 @@ height = 40.0
 
 [node name="FlashLight_CollisionPolygon2D" type="CollisionPolygon2D" parent="FlashLight/FlashLight_Area2D" unique_id=697712063]
 polygon = PackedVector2Array(8, 0, 192, -96, 192, 120)
+
+[node name="FlashLightWall" type="PointLight2D" parent="." unique_id=1361772071]
+color = Color(1, 0.84313726, 0.5058824, 1)
+energy = 8.68
+range_item_cull_mask = 2
+texture = SubResource("CompressedTexture2D_4flbx")
+offset = Vector2(128, 0)
+height = 40.0
 
 [connection signal="body_entered" from="FlashLight/FlashLight_Area2D" to="." method="_on_flash_light_area_2d_body_entered"]
 [connection signal="body_exited" from="FlashLight/FlashLight_Area2D" to="." method="_on_flash_light_area_2d_body_exited"]

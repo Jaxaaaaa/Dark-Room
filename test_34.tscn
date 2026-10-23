@@ -85,3 +85,27 @@ position = Vector2(384, 256)
 
 [node name="Pillar2" parent="." unique_id=127209422 instance=ExtResource("5_s0vw6")]
 position = Vector2(448, 256)
+
+[node name="Pillar7" parent="." unique_id=1499629653 instance=ExtResource("5_s0vw6")]
+position = Vector2(512, 256)
+
+[node name="Pillar8" parent="." unique_id=975586316 instance=ExtResource("5_s0vw6")]
+position = Vector2(576, 256)
+
+[node name="Pillar3" parent="." unique_id=211983464 instance=ExtResource("5_s0vw6")]
+position = Vector2(384, 224)
+
+[node name="Pillar4" parent="." unique_id=459670737 instance=ExtResource("5_s0vw6")]
+position = Vector2(384, 192)
+
+[node name="Pillar5" parent="." unique_id=150688021 instance=ExtResource("5_s0vw6")]
+position = Vector2(384, 160)
+
+[node name="Pillar6" parent="." unique_id=1297728371 instance=ExtResource("5_s0vw6")]
+position = Vector2(384, 128)
+
+[node name="Pillar9" parent="." unique_id=1303843168 instance=ExtResource("5_s0vw6")]
+position = Vector2(384, 104)
+
+[node name="Pillar10" parent="." unique_id=1344244093 instance=ExtResource("5_s0vw6")]
+position = Vector2(384, 88)
