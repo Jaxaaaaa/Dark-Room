@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://pfh4a1btwo72" path="res://creature.gd" id="1_fd6ru"]
 
 [node name="Creature" type="CharacterBody2D" unique_id=2024316162]
+collision_mask = 2
 script = ExtResource("1_fd6ru")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=646433165]

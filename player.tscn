@@ -19,6 +19,7 @@ fill_to = Vector2(1, 0.5)
 load_path = "res://.godot/imported/flashlight_cone.png-0206cae8ab514cb762f2ed4053c9d71c.ctex"
 
 [node name="Player" type="CharacterBody2D" unique_id=1967906088 groups=["Player_group"]]
+collision_mask = 2
 script = ExtResource("1_4flbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1195914107]
