@@ -24,6 +24,7 @@ collision_mask = 2
 stream = ExtResource("2_nugsn")
 volume_db = -13.607
 pitch_scale = 0.81
+autoplay = true
 max_distance = 605.0
 attenuation = 4.141059
 panning_strength = 3.0
