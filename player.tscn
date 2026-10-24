@@ -65,5 +65,8 @@ texture = SubResource("CompressedTexture2D_4flbx")
 offset = Vector2(128, 0)
 height = 40.0
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1308070151]
+position_smoothing_enabled = true
+
 [connection signal="body_entered" from="FlashLight/FlashLight_Area2D" to="." method="_on_flash_light_area_2d_body_entered"]
 [connection signal="body_exited" from="FlashLight/FlashLight_Area2D" to="." method="_on_flash_light_area_2d_body_exited"]

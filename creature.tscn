@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b4g2hxylhc6xl"]
 
 [ext_resource type="Script" uid="uid://pfh4a1btwo72" path="res://creature.gd" id="1_fd6ru"]
+[ext_resource type="AudioStream" uid="uid://xpx4opldnfsf" path="res://assets/helamangile-whisper-voices-1-193087.mp3" id="2_nugsn"]
 
 [node name="Creature" type="CharacterBody2D" unique_id=2024316162]
 collision_layer = 0
@@ -18,3 +19,11 @@ polygon = PackedVector2Array(0, -8, 8, 0, 0, 8)
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1449673969]
 collision_mask = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1419430999]
+stream = ExtResource("2_nugsn")
+volume_db = -13.607
+pitch_scale = 0.81
+max_distance = 605.0
+attenuation = 4.141059
+panning_strength = 3.0
