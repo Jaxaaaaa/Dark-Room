@@ -3,7 +3,6 @@ class_name Creature
 @onready var creature_body: Sprite2D = $Body
 
 const FULL_LIGHT = 8.6
-var is_in_light = false
 var received_light
 const SPEED = 100.0
 const SLOW_SPEED = SPEED * 0.5
