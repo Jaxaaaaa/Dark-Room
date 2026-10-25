@@ -3,15 +3,60 @@
 [ext_resource type="Script" uid="uid://pfh4a1btwo72" path="res://creature.gd" id="1_fd6ru"]
 [ext_resource type="AudioStream" uid="uid://xpx4opldnfsf" path="res://assets/helamangile-whisper-voices-1-193087.mp3" id="2_nugsn"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_tnwwl"]
+
+[sub_resource type="Gradient" id="Gradient_nugsn"]
+offsets = PackedFloat32Array(0.57191783, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tnwwl"]
+gradient = SubResource("Gradient_nugsn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_1k0n7"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ebcf"]
+gradient = SubResource("Gradient_1k0n7")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_w7hms"]
+colors = PackedColorArray(0, 0, 0, 0.78431374, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1k0n7"]
+gradient = SubResource("Gradient_w7hms")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nugsn"]
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 180.0
+inherit_velocity_ratio = 2.0
+direction = Vector3(0, -1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+damping_min = 0.2
+damping_max = 0.5
+scale_min = 0.5
+scale_max = 1.5
+color_ramp = SubResource("GradientTexture1D_1k0n7")
+turbulence_enabled = true
+
 [node name="Creature" type="CharacterBody2D" unique_id=2024316162]
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_fd6ru")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=646433165]
-polygon = PackedVector2Array(0, -16, 16, 0, 0, 16)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=936413471]
+shape = SubResource("CircleShape2D_tnwwl")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=2075472954 groups=["Creatures"]]
+visible = false
 light_mask = 0
 scale = Vector2(2, 2)
 color = Color(0.0627451, 0.07058824, 0.12156863, 0.12156863)
@@ -28,3 +73,14 @@ autoplay = true
 max_distance = 605.0
 attenuation = 4.141059
 panning_strength = 3.0
+
+[node name="Body" type="Sprite2D" parent="." unique_id=712699724]
+light_mask = 0
+texture = SubResource("GradientTexture2D_tnwwl")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=884560353]
+light_mask = 0
+amount = 30
+texture = SubResource("GradientTexture2D_0ebcf")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_nugsn")
