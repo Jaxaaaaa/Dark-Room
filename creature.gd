@@ -2,7 +2,9 @@ extends CharacterBody2D
 class_name Creature 
 @onready var creature_body: Sprite2D = $Body
 
+const FULL_LIGHT = 8.6
 var is_in_light = false
+var received_light
 const SPEED = 100.0
 const SLOW_SPEED = SPEED * 0.5
 
@@ -18,13 +20,14 @@ func _ready():
 func _physics_process(_delta: float) -> void: 
 	var direction = global_position.direction_to(player.global_position) #on récupère la position du joueur pour la sauvegarder dans une var direction
 	#look_at(player.global_position)
+	received_light = max_light_in_zone()
+	var ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
 	$RayCast2D.target_position = to_local(player.global_position) #on traduit la position global de la target en position locale
-	if is_in_light and not $RayCast2D.is_colliding() :
-		velocity = direction * SLOW_SPEED
-	else: 
-		velocity = direction * SPEED
+	if $RayCast2D.is_colliding():
+		ratio = 0
+	velocity = direction * lerp(SPEED, SLOW_SPEED, ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
 	move_and_slide()
-
+	
 func breath():
 	var factor = randf_range(0.50, 1.50)
 	var duration = randf_range(1.5, 2.5)
@@ -32,3 +35,14 @@ func breath():
 	tween_breath.tween_property(creature_body, "scale", creature_body.scale * factor, duration,)
 	tween_breath.tween_property(creature_body, "scale", body_scale, duration)
 	tween_breath.finished.connect(breath) #rappel la fonction lorsque le dernier breath est terminé
+
+func max_light_in_zone() -> float:
+	var max_intensity = 0.0
+	var list = $LightDetectorArea2D.get_overlapping_areas()
+	for area in list:
+		if area is LightZone:
+			var intensity_in_zone = area.get_intensity_at(global_position)
+			if intensity_in_zone > max_intensity:
+				max_intensity = intensity_in_zone
+	return max_intensity
+	

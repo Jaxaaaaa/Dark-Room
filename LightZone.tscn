@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://2qj3csxvne5i"]
+
+[ext_resource type="Script" uid="uid://bb6fxfqphjphi" path="res://light_zone.gd" id="1_e5kyk"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4flbx"]
+load_path = "res://.godot/imported/flashlight_cone.png-0206cae8ab514cb762f2ed4053c9d71c.ctex"
+
+[node name="Node2D" type="Node2D" unique_id=1369864839]
+
+[node name="FlashLight" type="PointLight2D" parent="." unique_id=1984048568]
+color = Color(1, 0.84313726, 0.5058824, 1)
+energy = 8.68
+shadow_enabled = true
+texture = SubResource("CompressedTexture2D_4flbx")
+offset = Vector2(128, 0)
+height = 40.0
+
+[node name="FlashLight_Area2D" type="Area2D" parent="FlashLight" unique_id=371806975 node_paths=PackedStringArray("light")]
+collision_layer = 4
+script = ExtResource("1_e5kyk")
+light = NodePath("..")
+
+[node name="FlashLight_CollisionPolygon2D" type="CollisionPolygon2D" parent="FlashLight/FlashLight_Area2D" unique_id=147434010]
+polygon = PackedVector2Array(8, 0, 192, -96, 192, 120)
+
+[node name="FlashLightWall" type="PointLight2D" parent="." unique_id=881755233]
+color = Color(1, 0.84313726, 0.5058824, 1)
+energy = 8.68
+range_item_cull_mask = 2
+texture = SubResource("CompressedTexture2D_4flbx")
+offset = Vector2(128, 0)
+height = 40.0

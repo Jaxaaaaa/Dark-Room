@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://birx1vw1dxg6a"]
 
 [ext_resource type="Script" uid="uid://dsxd2j64syh7i" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://2qj3csxvne5i" path="res://LightZone.tscn" id="2_onrkg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnwwl"]
 radius = 15.033297
@@ -14,9 +15,6 @@ gradient = SubResource("Gradient_4flbx")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4flbx"]
-load_path = "res://.godot/imported/flashlight_cone.png-0206cae8ab514cb762f2ed4053c9d71c.ctex"
 
 [node name="Player" type="CharacterBody2D" unique_id=1967906088 groups=["Player_group"]]
 collision_mask = 3
@@ -44,29 +42,7 @@ texture = SubResource("GradientTexture2D_tnwwl")
 texture_scale = 1.5
 height = 40.0
 
-[node name="FlashLight" type="PointLight2D" parent="." unique_id=1271864933]
-color = Color(1, 0.84313726, 0.5058824, 1)
-energy = 8.68
-shadow_enabled = true
-texture = SubResource("CompressedTexture2D_4flbx")
-offset = Vector2(128, 0)
-height = 40.0
-
-[node name="FlashLight_Area2D" type="Area2D" parent="FlashLight" unique_id=106244019]
-
-[node name="FlashLight_CollisionPolygon2D" type="CollisionPolygon2D" parent="FlashLight/FlashLight_Area2D" unique_id=697712063]
-polygon = PackedVector2Array(8, 0, 192, -96, 192, 120)
-
-[node name="FlashLightWall" type="PointLight2D" parent="." unique_id=1361772071]
-color = Color(1, 0.84313726, 0.5058824, 1)
-energy = 8.68
-range_item_cull_mask = 2
-texture = SubResource("CompressedTexture2D_4flbx")
-offset = Vector2(128, 0)
-height = 40.0
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1308070151]
 position_smoothing_enabled = true
 
-[connection signal="body_entered" from="FlashLight/FlashLight_Area2D" to="." method="_on_flash_light_area_2d_body_entered"]
-[connection signal="body_exited" from="FlashLight/FlashLight_Area2D" to="." method="_on_flash_light_area_2d_body_exited"]
+[node name="Node2D" parent="." unique_id=1369864839 instance=ExtResource("2_onrkg")]
