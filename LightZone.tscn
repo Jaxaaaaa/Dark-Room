@@ -19,6 +19,7 @@ height = 40.0
 collision_layer = 4
 script = ExtResource("1_e5kyk")
 light = NodePath("..")
+light_range = 192.0
 
 [node name="FlashLight_CollisionPolygon2D" type="CollisionPolygon2D" parent="FlashLight/FlashLight_Area2D" unique_id=147434010]
 polygon = PackedVector2Array(8, 0, 192, -96, 192, 120)
