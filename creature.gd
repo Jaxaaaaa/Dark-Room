@@ -20,7 +20,6 @@ func _physics_process(_delta: float) -> void:
 	var direction = global_position.direction_to(player.global_position) #on récupère la position du joueur pour la sauvegarder dans une var direction
 	#look_at(player.global_position)
 	received_light = max_light_in_zone()
-	print(received_light)
 	var ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
 	velocity = direction * lerp(SPEED, SLOW_SPEED, ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
 	move_and_slide()
