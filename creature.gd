@@ -3,13 +3,13 @@ class_name Creature
 @onready var creature_body: Sprite2D = $Body
 
 const FULL_LIGHT = 8.6
-var received_light
 const SPEED = 100.0
 const SLOW_SPEED = SPEED * 0.5
 
-var body_scale
-var player
-var tween_breath
+var received_light: float
+var body_scale: Vector2
+var player: CharacterBody2D
+var tween_breath: Tween
 
 func _ready():
 	player = get_tree().get_first_node_in_group("Player_group") #On va chercher le node player
@@ -21,9 +21,6 @@ func _physics_process(_delta: float) -> void:
 	#look_at(player.global_position)
 	received_light = max_light_in_zone()
 	var ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
-	$RayCast2D.target_position = to_local(player.global_position) #on traduit la position global de la target en position locale
-	if $RayCast2D.is_colliding():
-		ratio = 0
 	velocity = direction * lerp(SPEED, SLOW_SPEED, ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
 	move_and_slide()
 	
@@ -40,8 +37,11 @@ func max_light_in_zone() -> float:
 	var list = $LightDetectorArea2D.get_overlapping_areas()
 	for area in list:
 		if area is LightZone:
-			var intensity_in_zone = area.get_intensity_at(global_position)
-			if intensity_in_zone > max_intensity:
-				max_intensity = intensity_in_zone
+			$RayCast2D.target_position = to_local(area.light.global_position)
+			$RayCast2D.force_raycast_update()
+			if not $RayCast2D.is_colliding():
+				var intensity_in_zone = area.get_intensity_at(global_position)
+				if intensity_in_zone > max_intensity:
+					max_intensity = intensity_in_zone
 	return max_intensity
 	
