@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://exok2ylianjd" path="res://assets/floor.png" id="3_qxl8d"]
 [ext_resource type="PackedScene" uid="uid://b4g2hxylhc6xl" path="res://creature.tscn" id="4_rntcp"]
 [ext_resource type="PackedScene" uid="uid://ciap0i1w6ycww" path="res://Wall.tscn" id="5_s0vw6"]
+[ext_resource type="PackedScene" uid="uid://dbq8l3hdxn23f" path="res://bullet.tscn" id="6_qxl8d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
 texture = ExtResource("2_s0vw6")
@@ -144,3 +145,6 @@ position = Vector2(384, 64)
 
 [node name="Pillar35" parent="." unique_id=535764881 instance=ExtResource("5_s0vw6")]
 position = Vector2(384, 48)
+
+[node name="Bullet_Area2D" parent="." unique_id=76376977 instance=ExtResource("6_qxl8d")]
+position = Vector2(184, 280)

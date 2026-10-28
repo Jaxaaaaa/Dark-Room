@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://dbq8l3hdxn23f"]
+
+[ext_resource type="Script" uid="uid://bcocq2txxvm5l" path="res://bullet.gd" id="1_v7oki"]
+[ext_resource type="Script" uid="uid://bb6fxfqphjphi" path="res://light_zone.gd" id="2_v8qja"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tnwwl"]
+radius = 16.0
+
+[sub_resource type="Gradient" id="Gradient_rtl8c"]
+offsets = PackedFloat32Array(0.57160807, 1)
+colors = PackedColorArray(0.7477837, 0.41908658, 7.70092e-07, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tnwwl"]
+gradient = SubResource("Gradient_rtl8c")
+width = 10
+
+[sub_resource type="Gradient" id="Gradient_t4vbm"]
+offsets = PackedFloat32Array(0.38065326, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v7oki"]
+gradient = SubResource("Gradient_t4vbm")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ebcf"]
+radius = 32.0
+
+[node name="Bullet_Area2D" type="Area2D" unique_id=76376977]
+script = ExtResource("1_v7oki")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=441102121]
+visible = false
+shape = SubResource("CircleShape2D_tnwwl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1308242681]
+position = Vector2(0, -4.7683716e-07)
+scale = Vector2(0.062499996, 16.000002)
+texture = SubResource("GradientTexture1D_tnwwl")
+
+[node name="Timer" type="Timer" parent="." unique_id=1640662731]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=285147619]
+color = Color(0.47439194, 0.20906287, 0.06826735, 1)
+energy = 4.0
+texture = SubResource("GradientTexture2D_v7oki")
+
+[node name="Area2D" type="Area2D" parent="PointLight2D" unique_id=834597696 node_paths=PackedStringArray("light")]
+script = ExtResource("2_v8qja")
+light = NodePath("..")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PointLight2D/Area2D" unique_id=1037773646]
+shape = SubResource("CircleShape2D_0ebcf")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
