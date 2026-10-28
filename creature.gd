@@ -4,6 +4,8 @@ class_name Creature
 const FULL_LIGHT = 8.6
 const SPEED = 100.0
 const SLOW_SPEED = SPEED * 0.5
+const FADE_SPEED = 10.0
+const VISIBILITY_GAIN = 3
 
 var received_light: float
 var body_scale: Vector2
@@ -16,13 +18,16 @@ func _ready():
 	body_scale = creature_body.scale
 	breath()
 
-func _physics_process(_delta: float) -> void: 
-	var direction = global_position.direction_to(player.global_position) #on récupère la position du joueur pour la sauvegarder dans une var direction
+func _physics_process(delta: float) -> void: 
+	var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
 	#look_at(player.global_position)
 	received_light = max_light_in_zone()
-	var ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
-	velocity = direction * lerp(SPEED, SLOW_SPEED, ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
-	move_and_slide()
+	var light_ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
+	var visibility = clamp(light_ratio * VISIBILITY_GAIN, 0.0, 1.0)
+	modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
+	velocity = direction * lerp(SPEED, SLOW_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
+	print(received_light, "", visibility)
+	#move_and_slide()
 	
 func breath():
 	var factor = randf_range(0.50, 1.50)

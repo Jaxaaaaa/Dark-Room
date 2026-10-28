@@ -13,7 +13,6 @@ specular_color = Color(18.892157, 18.892157, 18.892157, 1)
 size = Vector2(64, 40)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_tnwwl"]
-cull_mode = 2
 polygon = PackedVector2Array(-8, -48, 56, -48, 56, -16, -8, -16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ebcf"]

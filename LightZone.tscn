@@ -7,6 +7,13 @@ load_path = "res://.godot/imported/flashlight_cone.png-0206cae8ab514cb762f2ed405
 
 [node name="Node2D" type="Node2D" unique_id=1369864839]
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1759460926]
+visible = false
+offset_top = -134.0
+offset_right = 379.0
+offset_bottom = 153.0
+color = Color(0.2673042, 0.26730424, 0.2673042, 1)
+
 [node name="FlashLight" type="PointLight2D" parent="." unique_id=1984048568]
 color = Color(1, 0.84313726, 0.5058824, 1)
 energy = 8.68
@@ -19,10 +26,10 @@ height = 40.0
 collision_layer = 4
 script = ExtResource("1_e5kyk")
 light = NodePath("..")
-light_range = 192.0
+light_range = 246.0
 
 [node name="FlashLight_CollisionPolygon2D" type="CollisionPolygon2D" parent="FlashLight/FlashLight_Area2D" unique_id=147434010]
-polygon = PackedVector2Array(8, 0, 192, -96, 192, 120)
+polygon = PackedVector2Array(4, 0, 92, -63, 171, -106, 212, -111, 235, -70, 246, -10, 245, 39, 237, 83, 208, 122, 175, 114)
 
 [node name="FlashLightWall" type="PointLight2D" parent="." unique_id=881755233]
 color = Color(1, 0.84313726, 0.5058824, 1)
