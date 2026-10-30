@@ -5,7 +5,7 @@
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4flbx"]
 load_path = "res://.godot/imported/flashlight_cone.png-0206cae8ab514cb762f2ed4053c9d71c.ctex"
 
-[node name="Node2D" type="Node2D" unique_id=1369864839]
+[node name="LightZone" type="Node2D" unique_id=1369864839]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1759460926]
 visible = false
@@ -24,6 +24,7 @@ height = 40.0
 
 [node name="FlashLight_Area2D" type="Area2D" parent="FlashLight" unique_id=371806975 node_paths=PackedStringArray("light")]
 collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_e5kyk")
 light = NodePath("..")
 light_range = 246.0

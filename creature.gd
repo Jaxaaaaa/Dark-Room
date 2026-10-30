@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 	modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
 	velocity = direction * lerp(SPEED, SLOW_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
 	print(received_light, "", visibility)
-	#move_and_slide()
+	move_and_slide()
 	
 func breath():
 	var factor = randf_range(0.50, 1.50)

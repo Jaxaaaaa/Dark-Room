@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c3el5v30ds0w7"]
+
+[ext_resource type="Script" uid="uid://ckfd2n26xdg5k" path="res://weapon_node_2d.gd" id="1_moaur"]
+[ext_resource type="PackedScene" uid="uid://dbq8l3hdxn23f" path="res://bullet.tscn" id="2_4mvvh"]
+
+[node name="Weapon_Node2D" type="Node2D" unique_id=1572877508]
+script = ExtResource("1_moaur")
+bullet = ExtResource("2_4mvvh")
+fire_rate = 5.0
+
+[node name="Muzzle_Marker2D" type="Marker2D" parent="." unique_id=1992071781]
+position = Vector2(40, 0)
+
+[node name="Line2D" type="Line2D" parent="." unique_id=970217554]
+points = PackedVector2Array(0, 0, 40, 0)
+width = 3.0

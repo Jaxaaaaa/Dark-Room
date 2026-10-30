@@ -3,7 +3,7 @@ extends Area2D
 #la liberer quand elle touche une autre zone, ou quand elle a 10s de temps de vie
 #Le timer doit se lancer dans _ready
 
-const SPEED = 100.0
+const SPEED = 1000.0
 
 var trajectory: Vector2 = Vector2.RIGHT
 var velocity: Vector2
@@ -17,4 +17,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_timer_timeout() -> void:
+	queue_free()
+
+
+func _on_body_entered(_body: Node2D) -> void:
 	queue_free()

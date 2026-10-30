@@ -25,18 +25,17 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ebcf"]
-radius = 32.0
+radius = 96.0
 
 [node name="Bullet_Area2D" type="Area2D" unique_id=76376977]
+collision_layer = 0
+collision_mask = 10
 script = ExtResource("1_v7oki")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=441102121]
-visible = false
 shape = SubResource("CircleShape2D_tnwwl")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1308242681]
-position = Vector2(0, -4.7683716e-07)
-scale = Vector2(0.062499996, 16.000002)
 texture = SubResource("GradientTexture1D_tnwwl")
 
 [node name="Timer" type="Timer" parent="." unique_id=1640662731]
@@ -45,15 +44,21 @@ one_shot = true
 autostart = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=285147619]
+position = Vector2(9.536743e-07, -4.7683716e-07)
 color = Color(0.47439194, 0.20906287, 0.06826735, 1)
 energy = 4.0
 texture = SubResource("GradientTexture2D_v7oki")
+texture_scale = 3.0
 
 [node name="Area2D" type="Area2D" parent="PointLight2D" unique_id=834597696 node_paths=PackedStringArray("light")]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("2_v8qja")
 light = NodePath("..")
+light_range = 96.0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="PointLight2D/Area2D" unique_id=1037773646]
 shape = SubResource("CircleShape2D_0ebcf")
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
