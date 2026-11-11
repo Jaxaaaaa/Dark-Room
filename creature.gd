@@ -50,3 +50,5 @@ func max_light_in_zone() -> float:
 					max_intensity = intensity_in_zone
 	return max_intensity
 	
+func take_hit():
+	queue_free()
