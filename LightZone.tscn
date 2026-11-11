@@ -15,7 +15,7 @@ offset_bottom = 153.0
 color = Color(0.2673042, 0.26730424, 0.2673042, 1)
 
 [node name="FlashLight" type="PointLight2D" parent="." unique_id=1984048568]
-color = Color(1, 0.84313726, 0.5058824, 1)
+color = Color(0.78431374, 0.0627451, 0.18039216, 1)
 energy = 8.68
 shadow_enabled = true
 texture = SubResource("CompressedTexture2D_4flbx")
@@ -33,7 +33,7 @@ light_range = 246.0
 polygon = PackedVector2Array(4, 0, 92, -63, 171, -106, 212, -111, 235, -70, 246, -10, 245, 39, 237, 83, 208, 122, 175, 114)
 
 [node name="FlashLightWall" type="PointLight2D" parent="." unique_id=881755233]
-color = Color(1, 0.84313726, 0.5058824, 1)
+color = Color(0.78431374, 0.0627451, 0.18039216, 1)
 energy = 8.68
 range_item_cull_mask = 2
 texture = SubResource("CompressedTexture2D_4flbx")
