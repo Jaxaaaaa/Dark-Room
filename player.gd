@@ -11,3 +11,6 @@ func _physics_process(_delta: float) -> void:
 	velocity = direction * SPEED
 	look_at(get_global_mouse_position())
 	move_and_slide()
+
+func die():
+	get_tree().reload_current_scene()

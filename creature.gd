@@ -52,3 +52,10 @@ func max_light_in_zone() -> float:
 	
 func take_hit():
 	queue_free()
+	
+
+
+
+func _on_attack_area_2d_body_entered(body: Node2D) -> void:
+	if body is Player:
+		body.die()

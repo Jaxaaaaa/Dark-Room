@@ -49,6 +49,8 @@ turbulence_enabled = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ebcf"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_fynid"]
+
 [node name="Creature" type="CharacterBody2D" unique_id=2024316162]
 collision_layer = 8
 collision_mask = 2
@@ -86,3 +88,12 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LightDetectorArea2D" unique_id=392379496]
 shape = SubResource("CircleShape2D_0ebcf")
+
+[node name="Attack_Area2D" type="Area2D" parent="." unique_id=1193419432]
+collision_layer = 0
+
+[node name="Attack_CollisionShape2D" type="CollisionShape2D" parent="Attack_Area2D" unique_id=409627380]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_fynid")
+
+[connection signal="body_entered" from="Attack_Area2D" to="." method="_on_attack_area_2d_body_entered"]
