@@ -16,6 +16,7 @@ var tween_breath: Tween
 func _ready():
 	player = get_tree().get_first_node_in_group("Player_group") #On va chercher le node player
 	body_scale = creature_body.scale
+	modulate.a = 0.0
 	breath()
 
 func _physics_process(delta: float) -> void: 
@@ -26,7 +27,6 @@ func _physics_process(delta: float) -> void:
 	var visibility = clamp(light_ratio * VISIBILITY_GAIN, 0.0, 1.0)
 	modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
 	velocity = direction * lerp(SPEED, SLOW_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
-	print(received_light, "", visibility)
 	move_and_slide()
 	
 func breath():
