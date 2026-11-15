@@ -7,6 +7,8 @@ const SLOW_SPEED = SPEED * 0.5
 const FADE_SPEED = 10.0
 const VISIBILITY_GAIN = 3
 
+enum Behavior { ERRATIC, ATTACK }
+@export var behavior: Behavior
 var received_light: float
 var body_scale: Vector2
 var player: CharacterBody2D
@@ -20,13 +22,18 @@ func _ready():
 	breath()
 
 func _physics_process(delta: float) -> void: 
-	var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
 	#look_at(player.global_position)
 	received_light = max_light_in_zone()
 	var light_ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
 	var visibility = clamp(light_ratio * VISIBILITY_GAIN, 0.0, 1.0)
 	modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
-	velocity = direction * lerp(SPEED, SLOW_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
+	match behavior:
+		Behavior.ERRATIC:
+			velocity = Vector2.ZERO
+			print("prout")
+		Behavior.ATTACK:
+			var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
+			velocity = direction * lerp(SPEED, SLOW_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
 	move_and_slide()
 	
 func breath():

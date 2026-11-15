@@ -3,10 +3,19 @@
 [ext_resource type="Script" uid="uid://bpnb310h6o6dl" path="res://creature_spawner_node_2d.gd" id="1_7aooa"]
 [ext_resource type="PackedScene" uid="uid://b4g2hxylhc6xl" path="res://creature.tscn" id="2_l5q2i"]
 
+[sub_resource type="Curve" id="Curve_qxl8d"]
+_limits = [0.0, 1.0, 0.004535146, 1.0]
+_data = [Vector2(0.005, 0.1), 0.0, 0.14281414, 0, 0, Vector2(0.5101681, 0.7946429), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [node name="Creature_Spawner_Node2D" type="Node2D" unique_id=1753325256]
 script = ExtResource("1_7aooa")
 creature = ExtResource("2_l5q2i")
 min_distance = 200.0
+spawn_curve = SubResource("Curve_qxl8d")
+max_creatures = 10
+max_delay = 8.0
+min_delay = 0.2
 
 [node name="Timer" type="Timer" parent="." unique_id=1528392086]
 wait_time = 10.0

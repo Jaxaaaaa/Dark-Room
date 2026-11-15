@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 const SPEED = 300.0
-
+@export var invincible: bool
 
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("Shoot"):
@@ -13,4 +13,5 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func die():
-	get_tree().reload_current_scene()
+	if not invincible :
+		get_tree().reload_current_scene()
