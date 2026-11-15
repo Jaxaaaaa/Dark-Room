@@ -45,6 +45,7 @@ position = Vector2(488, 104)
 position = Vector2(384, 256)
 
 [node name="Pillar12" parent="." unique_id=974168018 instance=ExtResource("5_s0vw6")]
+position = Vector2(0, 32)
 
 [node name="Pillar13" parent="." unique_id=427390930 instance=ExtResource("5_s0vw6")]
 position = Vector2(64, 32)

@@ -6,6 +6,7 @@
 [node name="Creature_Spawner_Node2D" type="Node2D" unique_id=1753325256]
 script = ExtResource("1_7aooa")
 creature = ExtResource("2_l5q2i")
+min_distance = 200.0
 
 [node name="Timer" type="Timer" parent="." unique_id=1528392086]
 wait_time = 10.0
