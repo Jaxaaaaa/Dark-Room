@@ -6,13 +6,15 @@ const SPEED = 100.0
 const SLOW_SPEED = SPEED * 0.5
 const FADE_SPEED = 10.0
 const VISIBILITY_GAIN = 3
-
+const WANDER_RADIUS = 150.0
+const ARRIVAL_DISTANCE = 10.0
 enum Behavior { ERRATIC, ATTACK }
 @export var behavior: Behavior
 var received_light: float
 var body_scale: Vector2
 var player: CharacterBody2D
 var tween_breath: Tween
+var target_point: Vector2 = Vector2.INF
 @onready var creature_body: Sprite2D = $Body
 
 func _ready():
@@ -29,8 +31,11 @@ func _physics_process(delta: float) -> void:
 	modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
 	match behavior:
 		Behavior.ERRATIC:
-			velocity = Vector2.ZERO
-			print("prout")
+			if target_point == Vector2.INF or has_reached_target_point():
+				target_point = choose_a_new_point()
+				$Wandering_Timer.start()
+			var direction = global_position.direction_to(target_point)
+			velocity = direction * SLOW_SPEED
 		Behavior.ATTACK:
 			var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
 			velocity = direction * lerp(SPEED, SLOW_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
@@ -62,7 +67,18 @@ func take_hit():
 	
 
 
-
 func _on_attack_area_2d_body_entered(body: Node2D) -> void:
 	if body is Player:
 		body.die()
+
+
+func choose_a_new_point() -> Vector2:
+	return Vector2(randf_range(global_position.x - WANDER_RADIUS, global_position.x + WANDER_RADIUS), randf_range(global_position.y - WANDER_RADIUS, global_position.y + WANDER_RADIUS))
+	
+
+func has_reached_target_point() -> bool:
+	return global_position.distance_to(target_point) < ARRIVAL_DISTANCE
+
+
+func _on_wandering_timer_timeout() -> void:
+	target_point = Vector2.INF

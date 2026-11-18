@@ -96,4 +96,9 @@ collision_layer = 0
 scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_fynid")
 
+[node name="Wandering_Timer" type="Timer" parent="." unique_id=2137711103]
+wait_time = 10.0
+autostart = true
+
 [connection signal="body_entered" from="Attack_Area2D" to="." method="_on_attack_area_2d_body_entered"]
+[connection signal="timeout" from="Wandering_Timer" to="." method="_on_wandering_timer_timeout"]
