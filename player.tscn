@@ -20,7 +20,6 @@ fill_to = Vector2(1, 0.5)
 [node name="Player" type="CharacterBody2D" unique_id=1967906088 groups=["Player_group"]]
 collision_mask = 2
 script = ExtResource("1_4flbx")
-invincible = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1195914107]
 shape = SubResource("CircleShape2D_tnwwl")

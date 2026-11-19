@@ -33,7 +33,6 @@ func _physics_process(delta: float) -> void:
 		Behavior.ERRATIC:
 			if ($Wandering_Timer.is_stopped() and target_point == Vector2.INF) or has_reached_target_point():
 				target_point = choose_a_new_point()
-				print(target_point)
 				$Wandering_Timer.start()
 			if target_point == Vector2.INF:
 				velocity = Vector2.ZERO
@@ -72,7 +71,7 @@ func take_hit():
 
 
 func _on_attack_area_2d_body_entered(body: Node2D) -> void:
-	if body is Player:
+	if body is Player and behavior == Behavior.ATTACK:
 		body.die()
 
 
@@ -92,4 +91,3 @@ func has_reached_target_point() -> bool:
 
 func _on_wandering_timer_timeout() -> void:
 	target_point = Vector2.INF
-	print("timeout")
