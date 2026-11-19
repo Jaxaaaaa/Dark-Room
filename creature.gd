@@ -31,11 +31,15 @@ func _physics_process(delta: float) -> void:
 	modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
 	match behavior:
 		Behavior.ERRATIC:
-			if target_point == Vector2.INF or has_reached_target_point():
+			if ($Wandering_Timer.is_stopped() and target_point == Vector2.INF) or has_reached_target_point():
 				target_point = choose_a_new_point()
+				print(target_point)
 				$Wandering_Timer.start()
-			var direction = global_position.direction_to(target_point)
-			velocity = direction * SLOW_SPEED
+			if target_point == Vector2.INF:
+				velocity = Vector2.ZERO
+			else:
+				var direction = global_position.direction_to(target_point)
+				velocity = direction * SLOW_SPEED
 		Behavior.ATTACK:
 			var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
 			velocity = direction * lerp(SPEED, SLOW_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
@@ -73,8 +77,14 @@ func _on_attack_area_2d_body_entered(body: Node2D) -> void:
 
 
 func choose_a_new_point() -> Vector2:
-	return Vector2(randf_range(global_position.x - WANDER_RADIUS, global_position.x + WANDER_RADIUS), randf_range(global_position.y - WANDER_RADIUS, global_position.y + WANDER_RADIUS))
-	
+	for _i in range(10):
+		var tested_point = Vector2(randf_range(global_position.x - WANDER_RADIUS, global_position.x + WANDER_RADIUS), randf_range(global_position.y - WANDER_RADIUS, global_position.y + WANDER_RADIUS))
+		var tested_point_local = to_local(tested_point)
+		$Wandering_RayCast2D2.target_position = tested_point_local
+		$Wandering_RayCast2D2.force_raycast_update()
+		if not $Wandering_RayCast2D2.is_colliding():
+			return tested_point
+	return Vector2.INF
 
 func has_reached_target_point() -> bool:
 	return global_position.distance_to(target_point) < ARRIVAL_DISTANCE
@@ -82,3 +92,4 @@ func has_reached_target_point() -> bool:
 
 func _on_wandering_timer_timeout() -> void:
 	target_point = Vector2.INF
+	print("timeout")
