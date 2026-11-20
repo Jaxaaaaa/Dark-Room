@@ -3,11 +3,14 @@ class_name Creature
 
 const FULL_LIGHT = 8.6
 const SPEED = 100.0
-const SLOW_SPEED = SPEED * 0.5
+const LIT_ATTACK_SPEED = SPEED * 0.5
+const WANDER_SPEED = SPEED * 0.25
+const ATTACK_SPEED = SPEED * 1.5
 const FADE_SPEED = 10.0
 const VISIBILITY_GAIN = 3
 const WANDER_RADIUS = 150.0
 const ARRIVAL_DISTANCE = 10.0
+const AGGRESSION_RATE = 0.1
 enum Behavior { ERRATIC, ATTACK }
 @export var behavior: Behavior
 var received_light: float
@@ -15,6 +18,7 @@ var body_scale: Vector2
 var player: CharacterBody2D
 var tween_breath: Tween
 var target_point: Vector2 = Vector2.INF
+var aggression_gauge: float = 0.0
 @onready var creature_body: Sprite2D = $Body
 
 func _ready():
@@ -31,6 +35,10 @@ func _physics_process(delta: float) -> void:
 	modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
 	match behavior:
 		Behavior.ERRATIC:
+			aggression_gauge += AGGRESSION_RATE * delta
+			if aggression_gauge >= 1:
+				start_attack()
+				return
 			if ($Wandering_Timer.is_stopped() and target_point == Vector2.INF) or has_reached_target_point():
 				target_point = choose_a_new_point()
 				$Wandering_Timer.start()
@@ -38,10 +46,10 @@ func _physics_process(delta: float) -> void:
 				velocity = Vector2.ZERO
 			else:
 				var direction = global_position.direction_to(target_point)
-				velocity = direction * SLOW_SPEED
+				velocity = direction * WANDER_SPEED
 		Behavior.ATTACK:
 			var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
-			velocity = direction * lerp(SPEED, SLOW_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre SPEED et SLOW_SPEED
+			velocity = direction * lerp(ATTACK_SPEED, LIT_ATTACK_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre ATTACK_SPEED et LIT_ATTACK_SPEED
 	move_and_slide()
 	
 func breath():
@@ -91,3 +99,10 @@ func has_reached_target_point() -> bool:
 
 func _on_wandering_timer_timeout() -> void:
 	target_point = Vector2.INF
+
+func start_attack() -> void:
+	behavior = Behavior.ATTACK
+	var list = $Attack_Area2D.get_overlapping_bodies()
+	for body in list:
+		if body is Player:
+			body.die()
