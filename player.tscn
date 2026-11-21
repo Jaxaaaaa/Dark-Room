@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://birx1vw1dxg6a"]
 
 [ext_resource type="Script" uid="uid://dsxd2j64syh7i" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://d011cnpqbbyua" path="res://assets/player.png" id="2_hqtel"]
 [ext_resource type="PackedScene" uid="uid://2qj3csxvne5i" path="res://LightZone.tscn" id="2_onrkg"]
 [ext_resource type="PackedScene" uid="uid://c3el5v30ds0w7" path="res://weapon_node_2d.tscn" id="3_i3pqv"]
 
@@ -18,14 +19,18 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=1967906088 groups=["Player_group"]]
+texture_filter = 1
 collision_mask = 2
 script = ExtResource("1_4flbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1195914107]
 shape = SubResource("CircleShape2D_tnwwl")
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1878663991]
-polygon = PackedVector2Array(16, 0, -10, -10, -10, 10)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=424057561]
+texture_filter = 1
+position = Vector2(1, -1)
+scale = Vector2(0.95833325, 0.9375)
+texture = ExtResource("2_hqtel")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1745110368]
 color = Color(0.78431374, 0.0627451, 0.18039216, 1)
@@ -44,9 +49,10 @@ texture_scale = 1.5
 height = 40.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1308070151]
-position_smoothing_enabled = true
+process_callback = 0
 
 [node name="Node2D" parent="." unique_id=1369864839 instance=ExtResource("2_onrkg")]
+position = Vector2(18, -1)
 
 [node name="Weapon_Node2D" parent="." unique_id=1572877508 instance=ExtResource("3_i3pqv")]
-position = Vector2(12, 0)
+position = Vector2(15, -1)

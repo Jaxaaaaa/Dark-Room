@@ -33,7 +33,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAA
 tile_set = SubResource("TileSet_7dm0k")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=41029678]
-color = Color(0.0627451, 0.07058824, 0.12156863, 0.8)
+color = Color(0.062399995, 0.07008, 0.12, 1)
 
 [node name="Creature" parent="." unique_id=2024316162 instance=ExtResource("4_rntcp")]
 position = Vector2(488, 104)

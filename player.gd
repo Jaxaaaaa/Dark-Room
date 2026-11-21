@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-const SPEED = 300.0
+const SPEED = 150.0
 @export var invincible: bool
 
 func _physics_process(_delta: float) -> void:
