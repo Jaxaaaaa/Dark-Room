@@ -13,7 +13,7 @@ const ARRIVAL_DISTANCE = 10.0
 const AGGRESSION_RATE_BASE = 0.05
 const AGGRESSION_RATE_MULTIPLIER = 0.25
 const MAX_CONTAGION = 0.9
-enum Behavior { ERRATIC, ATTACK }
+enum Behavior { ERRATIC, WINDUP, ATTACK }
 @export var behavior: Behavior
 @export var visible_debug: bool
 var received_light: float
