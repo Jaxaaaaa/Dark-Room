@@ -149,3 +149,6 @@ floor_layer = NodePath("../TileMapLayer")
 
 [node name="Player" parent="." unique_id=1967906088 instance=ExtResource("1_akhr5")]
 position = Vector2(548, 322)
+
+[node name="Creature2" parent="." unique_id=377390802 instance=ExtResource("4_rntcp")]
+position = Vector2(728, 112)

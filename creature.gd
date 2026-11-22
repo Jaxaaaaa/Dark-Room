@@ -10,15 +10,19 @@ const FADE_SPEED = 10.0
 const VISIBILITY_GAIN = 3
 const WANDER_RADIUS = 150.0
 const ARRIVAL_DISTANCE = 10.0
-const AGGRESSION_RATE = 0.1
+const AGGRESSION_RATE_BASE = 0.05
+const AGGRESSION_RATE_MULTIPLIER = 0.25
+const MAX_CONTAGION = 0.9
 enum Behavior { ERRATIC, ATTACK }
 @export var behavior: Behavior
+@export var visible_debug: bool
 var received_light: float
 var body_scale: Vector2
 var player: CharacterBody2D
 var tween_breath: Tween
 var target_point: Vector2 = Vector2.INF
 var aggression_gauge: float = 0.0
+var aggression_rate: float = AGGRESSION_RATE_BASE
 @onready var creature_body: Sprite2D = $Body
 
 func _ready():
@@ -32,12 +36,19 @@ func _physics_process(delta: float) -> void:
 	received_light = max_light_in_zone()
 	var light_ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
 	var visibility = clamp(light_ratio * VISIBILITY_GAIN, 0.0, 1.0)
-	modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
+	if visible_debug: 
+		modulate.a = 1.0
+	else:
+		modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
 	match behavior:
 		Behavior.ERRATIC:
-			aggression_gauge += AGGRESSION_RATE * delta
+			var creature_count = get_tree().get_nodes_in_group("Creatures").size() - 1
+			aggression_rate = AGGRESSION_RATE_BASE + (AGGRESSION_RATE_BASE * creature_count *  AGGRESSION_RATE_MULTIPLIER)
+			aggression_gauge += aggression_rate * delta
 			if aggression_gauge >= 1:
 				start_attack()
+				if visible_debug:
+					$Debug_polygon.visible = true
 				return
 			if ($Wandering_Timer.is_stopped() and target_point == Vector2.INF) or has_reached_target_point():
 				target_point = choose_a_new_point()
@@ -103,6 +114,16 @@ func _on_wandering_timer_timeout() -> void:
 func start_attack() -> void:
 	behavior = Behavior.ATTACK
 	var list = $Attack_Area2D.get_overlapping_bodies()
+	var creatures_in_range = $Contagion_Area2D.get_overlapping_bodies()
+	for body in creatures_in_range:
+		if body is Creature:
+			var distance = global_position.distance_to(body.global_position)
+			var distance_ratio = clamp(distance / $Contagion_Area2D/Contagion_CollisionShape2D.shape.radius, 0.0, 1.0)
+			var contagion_amount = lerp(MAX_CONTAGION, 0.0, distance_ratio)
+			body.add_aggression(contagion_amount)
 	for body in list:
 		if body is Player:
 			body.die()
+
+func add_aggression(amount: float) -> void:
+	aggression_gauge += amount

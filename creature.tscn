@@ -51,6 +51,9 @@ turbulence_enabled = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fynid"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_su8e1"]
+radius = 225.28204
+
 [node name="Creature" type="CharacterBody2D" unique_id=2024316162 groups=["Creatures"]]
 collision_layer = 8
 collision_mask = 2
@@ -102,6 +105,18 @@ one_shot = true
 
 [node name="Wandering_RayCast2D2" type="RayCast2D" parent="." unique_id=1396919428]
 collision_mask = 2
+
+[node name="Contagion_Area2D" type="Area2D" parent="." unique_id=655951976]
+light_mask = 0
+collision_mask = 8
+
+[node name="Contagion_CollisionShape2D" type="CollisionShape2D" parent="Contagion_Area2D" unique_id=1329762750]
+shape = SubResource("CircleShape2D_su8e1")
+
+[node name="Debug_polygon" type="Label" parent="." unique_id=1225226221]
+visible = false
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "!!!!!!!!!"
 
 [connection signal="body_entered" from="Attack_Area2D" to="." method="_on_attack_area_2d_body_entered"]
 [connection signal="timeout" from="Wandering_Timer" to="." method="_on_wandering_timer_timeout"]
