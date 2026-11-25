@@ -17,6 +17,7 @@ enum Behavior { ERRATIC, WINDUP, ATTACK }
 @export var behavior: Behavior
 @export var visible_debug: bool
 var received_light: float
+var revealing_light: float
 var body_scale: Vector2
 var player: CharacterBody2D
 var tween_breath: Tween
@@ -34,13 +35,14 @@ func _ready():
 
 func _physics_process(delta: float) -> void: 
 	#look_at(player.global_position)
-	received_light = max_light_in_zone()
-	var light_ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
-	var visibility = clamp(light_ratio * VISIBILITY_GAIN, 0.0, 1.0)
+	update_received_light()
+	var speed_in_light_ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
+	var revealing_light_ratio = clamp(revealing_light / FULL_LIGHT, 0.0, 1.0)
+	var visibility = clamp(revealing_light_ratio * VISIBILITY_GAIN, 0.0, 1.0)
 	if visible_debug: 
 		modulate.a = 1.0
 	else:
-		modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la luminosité reçue
+		modulate.a = lerp(modulate.a, visibility, FADE_SPEED * delta) #change l'alpha selon la lumière qui révèle reçue
 	match behavior:
 		Behavior.ERRATIC:
 			var creature_count = get_tree().get_nodes_in_group("Creatures").size() - 1
@@ -66,7 +68,7 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 		Behavior.ATTACK:
 			var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
-			velocity = direction * lerp(ATTACK_SPEED, LIT_ATTACK_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre ATTACK_SPEED et LIT_ATTACK_SPEED
+			velocity = direction * lerp(ATTACK_SPEED, LIT_ATTACK_SPEED, speed_in_light_ratio) #transforme la lumière reçu en vitesse comprise entre ATTACK_SPEED et LIT_ATTACK_SPEED
 	move_and_slide()
 	
 func breath():
@@ -84,8 +86,9 @@ func shiver():
 	tween_shiver.tween_property(creature_body, "scale", body_scale * 0.9, duration)
 	tween_shiver.set_loops()
 	
-func max_light_in_zone() -> float:
-	var max_intensity = 0.0
+func update_received_light() -> void:
+	received_light = 0.0
+	revealing_light = 0.0
 	var list = $LightDetectorArea2D.get_overlapping_areas()
 	for area in list:
 		if area is LightZone:
@@ -93,9 +96,10 @@ func max_light_in_zone() -> float:
 			$RayCast2D.force_raycast_update()
 			if not $RayCast2D.is_colliding():
 				var intensity_in_zone = area.get_intensity_at(global_position)
-				if intensity_in_zone > max_intensity:
-					max_intensity = intensity_in_zone
-	return max_intensity
+				if intensity_in_zone > received_light:
+					received_light = intensity_in_zone
+				if area.show_creature and intensity_in_zone > revealing_light:
+					revealing_light = intensity_in_zone
 	
 func take_hit():
 	queue_free()

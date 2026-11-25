@@ -99,10 +99,10 @@ color = Color(0.062399995, 0.07008, 0.12, 1)
 position = Vector2(112, 160)
 
 [node name="Lamp2" parent="." unique_id=1606120011 instance=ExtResource("4_22day")]
-position = Vector2(424, 152)
+position = Vector2(296, 160)
 
 [node name="Lamp3" parent="." unique_id=1143560272 instance=ExtResource("4_22day")]
-position = Vector2(472, 160)
+position = Vector2(464, 160)
 
 [node name="Lamp4" parent="." unique_id=1697011906 instance=ExtResource("4_22day")]
 position = Vector2(656, 160)

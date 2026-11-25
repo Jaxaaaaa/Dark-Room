@@ -28,6 +28,7 @@ collision_mask = 0
 script = ExtResource("1_e5kyk")
 light = NodePath("..")
 light_range = 246.0
+show_creature = true
 
 [node name="FlashLight_CollisionPolygon2D" type="CollisionPolygon2D" parent="FlashLight/FlashLight_Area2D" unique_id=147434010]
 polygon = PackedVector2Array(4, 0, 92, -63, 171, -106, 212, -111, 235, -70, 246, -10, 245, 39, 237, 83, 208, 122, 175, 114)
