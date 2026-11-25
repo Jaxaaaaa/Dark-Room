@@ -119,7 +119,7 @@ theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "!!!!!!!!!"
 
 [node name="Windup_Timer" type="Timer" parent="." unique_id=318971840]
-wait_time = 3.0
+wait_time = 1.5
 
 [connection signal="body_entered" from="Attack_Area2D" to="." method="_on_attack_area_2d_body_entered"]
 [connection signal="timeout" from="Wandering_Timer" to="." method="_on_wandering_timer_timeout"]
