@@ -23,6 +23,7 @@ var tween_breath: Tween
 var target_point: Vector2 = Vector2.INF
 var aggression_gauge: float = 0.0
 var aggression_rate: float = AGGRESSION_RATE_BASE
+var tween_shiver: Tween
 @onready var creature_body: Sprite2D = $Body
 
 func _ready():
@@ -46,7 +47,10 @@ func _physics_process(delta: float) -> void:
 			aggression_rate = AGGRESSION_RATE_BASE + (AGGRESSION_RATE_BASE * creature_count *  AGGRESSION_RATE_MULTIPLIER)
 			aggression_gauge += aggression_rate * delta
 			if aggression_gauge >= 1:
-				start_attack()
+				$Windup_Timer.start()
+				tween_breath.kill()
+				shiver()
+				behavior = Behavior.WINDUP
 				if visible_debug:
 					$Debug_polygon.visible = true
 				return
@@ -58,6 +62,8 @@ func _physics_process(delta: float) -> void:
 			else:
 				var direction = global_position.direction_to(target_point)
 				velocity = direction * WANDER_SPEED
+		Behavior.WINDUP:
+			velocity = Vector2.ZERO
 		Behavior.ATTACK:
 			var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
 			velocity = direction * lerp(ATTACK_SPEED, LIT_ATTACK_SPEED, light_ratio) #transforme la lumière reçu en vitesse comprise entre ATTACK_SPEED et LIT_ATTACK_SPEED
@@ -67,10 +73,17 @@ func breath():
 	var factor = randf_range(0.50, 1.50)
 	var duration = randf_range(1.5, 2.5)
 	tween_breath = create_tween()
-	tween_breath.tween_property(creature_body, "scale", creature_body.scale * factor, duration,)
+	tween_breath.tween_property(creature_body, "scale", creature_body.scale * factor, duration)
 	tween_breath.tween_property(creature_body, "scale", body_scale, duration)
 	tween_breath.finished.connect(breath) #rappel la fonction lorsque le dernier breath est terminé
 
+func shiver():
+	var duration = 0.05
+	tween_shiver = create_tween()
+	tween_shiver.tween_property(creature_body, "scale", body_scale * 1.1, duration)
+	tween_shiver.tween_property(creature_body, "scale", body_scale * 0.9, duration)
+	tween_shiver.set_loops()
+	
 func max_light_in_zone() -> float:
 	var max_intensity = 0.0
 	var list = $LightDetectorArea2D.get_overlapping_areas()
@@ -127,3 +140,10 @@ func start_attack() -> void:
 
 func add_aggression(amount: float) -> void:
 	aggression_gauge += amount
+
+
+func _on_windup_timer_timeout() -> void:
+	tween_shiver.kill()
+	creature_body.scale = body_scale
+	breath()
+	start_attack()
