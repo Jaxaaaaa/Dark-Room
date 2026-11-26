@@ -25,6 +25,7 @@ var target_point: Vector2 = Vector2.INF
 var aggression_gauge: float = 0.0
 var aggression_rate: float = AGGRESSION_RATE_BASE
 var tween_shiver: Tween
+var zone: Area2D = null
 @onready var creature_body: Sprite2D = $Body
 
 func _ready():
@@ -36,7 +37,6 @@ func _ready():
 func _physics_process(delta: float) -> void: 
 	#look_at(player.global_position)
 	update_received_light()
-	var speed_in_light_ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
 	var revealing_light_ratio = clamp(revealing_light / FULL_LIGHT, 0.0, 1.0)
 	var visibility = clamp(revealing_light_ratio * VISIBILITY_GAIN, 0.0, 1.0)
 	if visible_debug: 
@@ -67,10 +67,18 @@ func _physics_process(delta: float) -> void:
 		Behavior.WINDUP:
 			velocity = Vector2.ZERO
 		Behavior.ATTACK:
-			var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
-			velocity = direction * lerp(ATTACK_SPEED, LIT_ATTACK_SPEED, speed_in_light_ratio) #transforme la lumière reçu en vitesse comprise entre ATTACK_SPEED et LIT_ATTACK_SPEED
-	move_and_slide()
+			move_and_slide()
+
+func get_attack_speed() -> float:
+	var ratio = 0.0
+	var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
+	if zone is Corridor:
+		ratio = zone.light_ratio
+		velocity = direction * lerp(ATTACK_SPEED, LIT_ATTACK_SPEED, ratio) #transforme la lumière reçu en vitesse comprise entre ATTACK_SPEED et LIT_ATTACK_SPEED
 	
+	else:
+		ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
+	return 0
 func breath():
 	var factor = randf_range(0.50, 1.50)
 	var duration = randf_range(1.5, 2.5)
@@ -89,9 +97,12 @@ func shiver():
 func update_received_light() -> void:
 	received_light = 0.0
 	revealing_light = 0.0
+	zone = null
 	var list = $LightDetectorArea2D.get_overlapping_areas()
 	for area in list:
 		if area is LightZone:
+			if area is Corridor:
+				zone = area
 			$RayCast2D.target_position = to_local(area.light.global_position)
 			$RayCast2D.force_raycast_update()
 			if not $RayCast2D.is_colliding():
