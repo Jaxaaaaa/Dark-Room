@@ -67,18 +67,20 @@ func _physics_process(delta: float) -> void:
 		Behavior.WINDUP:
 			velocity = Vector2.ZERO
 		Behavior.ATTACK:
-			move_and_slide()
+			var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
+			velocity = direction * get_attack_speed()
+	move_and_slide()
 
 func get_attack_speed() -> float:
 	var ratio = 0.0
-	var direction = global_position.direction_to(player.global_position) #on récupère la direction du joueur pour la sauvegarder dans une var direction
+	var speed = 0.0
 	if zone is Corridor:
 		ratio = zone.light_ratio
-		velocity = direction * lerp(ATTACK_SPEED, LIT_ATTACK_SPEED, ratio) #transforme la lumière reçu en vitesse comprise entre ATTACK_SPEED et LIT_ATTACK_SPEED
-	
 	else:
 		ratio = clamp(received_light / FULL_LIGHT, 0.0, 1.0) #borne l'intensité entre 0 et 1, 0 pas de light, 1 full light
-	return 0
+	speed = lerp(ATTACK_SPEED, LIT_ATTACK_SPEED, ratio) #transforme la lumière reçu en vitesse comprise entre ATTACK_SPEED et LIT_ATTACK_SPEED
+	print("speed =", speed)
+	return speed
 func breath():
 	var factor = randf_range(0.50, 1.50)
 	var duration = randf_range(1.5, 2.5)
@@ -100,9 +102,9 @@ func update_received_light() -> void:
 	zone = null
 	var list = $LightDetectorArea2D.get_overlapping_areas()
 	for area in list:
+		if area is Corridor:
+			zone = area
 		if area is LightZone:
-			if area is Corridor:
-				zone = area
 			$RayCast2D.target_position = to_local(area.light.global_position)
 			$RayCast2D.force_raycast_update()
 			if not $RayCast2D.is_colliding():

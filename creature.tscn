@@ -56,8 +56,9 @@ radius = 225.28204
 
 [node name="Creature" type="CharacterBody2D" unique_id=2024316162 groups=["Creatures"]]
 collision_layer = 8
-collision_mask = 18
+collision_mask = 2
 script = ExtResource("1_fd6ru")
+visible_debug = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=936413471]
 shape = SubResource("CircleShape2D_tnwwl")
@@ -87,7 +88,7 @@ process_material = SubResource("ParticleProcessMaterial_nugsn")
 
 [node name="LightDetectorArea2D" type="Area2D" parent="." unique_id=1909016578]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LightDetectorArea2D" unique_id=392379496]
 shape = SubResource("CircleShape2D_0ebcf")
