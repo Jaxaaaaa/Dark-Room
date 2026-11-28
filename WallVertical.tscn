@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bt14d85mcv85t"]
+
+[ext_resource type="PackedScene" uid="uid://ciap0i1w6ycww" path="res://Wall.tscn" id="1_vf4xs"]
+[ext_resource type="Texture2D" uid="uid://cd3pp570abod2" path="res://assets/lab_wall_vertical.png" id="2_6ek8p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qld0r"]
+size = Vector2(32, 64)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ywhhs"]
+polygon = PackedVector2Array(-8, -80, 24, -80, 24, -16, -8, -16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ek8p"]
+size = Vector2(32, 64)
+
+[node name="WallVertical" unique_id=214465710 instance=ExtResource("1_vf4xs")]
+
+[node name="FaceSprite2D" parent="." index="0" unique_id=634865955]
+light_mask = 128
+position = Vector2(0, 32)
+texture = ExtResource("2_6ek8p")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1643671610]
+position = Vector2(16, -32)
+shape = SubResource("RectangleShape2D_qld0r")
+
+[node name="FootOccluder" parent="." index="2" unique_id=522934809]
+occluder = SubResource("OccluderPolygon2D_ywhhs")
+occluder_light_mask = 3
+
+[node name="CollisionShape2D" parent="Area2D" parent_id_path=PackedInt32Array(1766079586) index="0" unique_id=283861932]
+position = Vector2(16, -32)
+shape = SubResource("RectangleShape2D_6ek8p")
+
+[node name="CapSprite2D2" parent="." index="4" unique_id=22530731]
+visible = false
+position = Vector2(24, -32)
+scale = Vector2(1, 2.1406927)

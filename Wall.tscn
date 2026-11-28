@@ -1,30 +1,25 @@
 [gd_scene format=3 uid="uid://ciap0i1w6ycww"]
 
 [ext_resource type="Script" uid="uid://b3rtuwh3h0egk" path="res://static_body_2d.gd" id="1_dyby8"]
-[ext_resource type="Texture2D" uid="uid://bqjomd6fecrhe" path="res://assets/pillar_34.png" id="1_yjt17"]
-[ext_resource type="Texture2D" uid="uid://bxsijca57pt4y" path="res://assets/pillar_34_n2_a.png" id="2_ypqmy"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_s0vw6"]
-diffuse_texture = ExtResource("1_yjt17")
-normal_texture = ExtResource("2_ypqmy")
-specular_color = Color(18.892157, 18.892157, 18.892157, 1)
+[ext_resource type="Texture2D" uid="uid://bwypj2nojxso8" path="res://assets/lab_wall_face.png" id="2_ywhhs"]
+[ext_resource type="Texture2D" uid="uid://d1qrt0xw7hnft" path="res://assets/lab_wall_cap.png" id="3_bhtf4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tnwwl"]
 size = Vector2(64, 40)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_tnwwl"]
-polygon = PackedVector2Array(-8, -48, 56, -48, 56, -16, -8, -16)
+polygon = PackedVector2Array(56, -48, 56, -16, -8, -16, -8, -48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ebcf"]
 size = Vector2(64, 74.5)
 
-[node name="Pillar" type="StaticBody2D" unique_id=214465710]
+[node name="Wall" type="StaticBody2D" unique_id=214465710]
 collision_layer = 2
 script = ExtResource("1_dyby8")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=634865955]
+[node name="FaceSprite2D" type="Sprite2D" parent="." unique_id=634865955]
 light_mask = 2
-texture = SubResource("CanvasTexture_s0vw6")
+texture = ExtResource("2_ywhhs")
 centered = false
 offset = Vector2(0, -96)
 
@@ -39,8 +34,13 @@ occluder = SubResource("OccluderPolygon2D_tnwwl")
 [node name="Area2D" type="Area2D" parent="." unique_id=1766079586]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=283861932]
-position = Vector2(32, -70.75)
+position = Vector2(32, -56)
 shape = SubResource("RectangleShape2D_0ebcf")
+
+[node name="CapSprite2D2" type="Sprite2D" parent="." unique_id=22530731]
+light_mask = 128
+position = Vector2(32, -112)
+texture = ExtResource("3_bhtf4")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
