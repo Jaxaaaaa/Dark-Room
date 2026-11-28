@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bb6fxfqphjphi" path="res://light_zone.gd" id="1_bekw5"]
 [ext_resource type="Texture2D" uid="uid://djxvuvft0wqqj" path="res://assets/lamp_light.png" id="1_uno5e"]
+[ext_resource type="AudioStream" uid="uid://d3dkfr71nu118" path="res://assets/Bzbz.mp3" id="3_qfipa"]
+[ext_resource type="AudioStream" uid="uid://crrqu0pc2rii5" path="res://assets/hum.mp3" id="4_00ij4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tnwwl"]
 radius = 100.0
@@ -13,10 +15,12 @@ energy = 2.0
 texture = ExtResource("1_uno5e")
 texture_scale = 1.3
 
-[node name="Lamp_Area2D" type="Area2D" parent="." unique_id=285013400 node_paths=PackedStringArray("light", "wall_light")]
+[node name="Lamp_Area2D" type="Area2D" parent="." unique_id=285013400 node_paths=PackedStringArray("hum_sound", "flicker_sound", "light", "wall_light")]
 collision_layer = 4
 collision_mask = 9
 script = ExtResource("1_bekw5")
+hum_sound = NodePath("../HumAudioStreamPlayer2D2")
+flicker_sound = NodePath("../BzAudioStreamPlayer2D")
 light = NodePath("../PointLight2D")
 wall_light = NodePath("../PointLight2DWall")
 light_range = 100.0
@@ -30,3 +34,9 @@ energy = 2.0
 range_item_cull_mask = 2
 texture = ExtResource("1_uno5e")
 texture_scale = 1.3
+
+[node name="BzAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1038145550]
+stream = ExtResource("3_qfipa")
+
+[node name="HumAudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="." unique_id=1109658344]
+stream = ExtResource("4_00ij4")

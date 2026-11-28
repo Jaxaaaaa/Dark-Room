@@ -8,6 +8,8 @@ const FLICKER_MIN_DURATION = 0.05
 const FLICKER_MAX_DURATION = 0.15
 const MIN_BRIGHTNESS = 0.7
 
+@export var hum_sound: AudioStreamPlayer2D
+@export var flicker_sound: AudioStreamPlayer2D
 @export var light: Light2D
 @export var wall_light: Light2D
 @export var light_range: float
@@ -32,18 +34,25 @@ func _process(delta: float) -> void:
 		flicker_time_left -= delta
 		
 		#flicker_roll
-		if flicker_time_left <= 0: #si il n'y'a pas de coupure en cours
+		if flicker_time_left <= 0 and power > 0: #si il n'y'a pas de coupure en cours et que la lampe n'est pas morte
 			var flicker_ratio = clamp(power / FLICKER_THRESHOLD, 0.0, 1.0)
 			var chance = lerp(MAX_FLICKER_CHANCE, 0.0, flicker_ratio)
 			if randf() < chance: #tire entre 0 et 1 et regarde si c'est inférieur à chance
 				flicker_time_left = randf_range(FLICKER_MIN_DURATION, FLICKER_MAX_DURATION)
-	
+				if flicker_sound:
+					flicker_sound.play()
+				
 		#apply energy when it's not flickering
 		var brightness: float
 		if flicker_time_left > 0 or power == 0.0: 
 			brightness = 0.0
+			if hum_sound:
+				hum_sound.stop()
 		else:
 			brightness = lerp(MIN_BRIGHTNESS, 1.0, power)
+			if hum_sound:
+				if not hum_sound.is_playing():
+					hum_sound.play()
 			
 		light.energy = floor_light_energy * brightness
 		if wall_light:
